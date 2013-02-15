@@ -49,8 +49,6 @@ Checkout the specification of the API.
 ```bash
 curl http://localhost:8080/spec.json
 ```
-
-Which should return -
 ```json
 {
   "models": [], 
@@ -80,8 +78,6 @@ curl -X POST \
   -d "\"Cosmic\"" \
   http://localhost:8080/actions/remember_me
 ```
-
-Returns -
 ```json
 "Hello, Cosmic! I'll remember you."
 ```
@@ -94,7 +90,6 @@ curl -X POST \
   -d "\"Hello\"" \
   http://localhost:8080/actions/remember_me
 ```
-
 ```json
 "Hello, Hello! I'll remember you."
 ```
@@ -106,7 +101,6 @@ curl -X POST \
   --header "Content-Type: application/json" \
   http://localhost:8080/actions/list_people
 ```
-
 ```json
 ["Cosmic", "Hello"]
 ```
