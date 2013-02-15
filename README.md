@@ -34,11 +34,13 @@ python hello_world_api.py
 
 Now you have a Cosmic API running as a web server, listening to port `8080`.
 
-## Play with Cosmic client
+## Play with the API
+
+### Using Cosmic client
 
 
 
-## Play with the API through raw requests
+### Using raw HTTP request
 
 (You can use [Postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en) for Chrome as well, it's an excellent app for playing with web APIs)
 
