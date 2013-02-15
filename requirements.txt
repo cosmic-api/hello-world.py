@@ -1,0 +1,1 @@
+-e git://github.com/cosmic-api/cosmic.py.git#egg=cosmic-master
