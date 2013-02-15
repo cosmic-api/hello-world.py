@@ -75,7 +75,10 @@ Which should return -
 Let's add a name.
 
 ```bash
-curl -X POST --header "Content-Type: application/json" -d "\"Cosmic\"" http://localhost:8080/actions/remember_me
+curl -X POST \
+  --header "Content-Type: application/json" \
+  -d "\"Cosmic\"" \
+  http://localhost:8080/actions/remember_me
 ```
 
 Returns -
@@ -86,7 +89,10 @@ Returns -
 Add another name.
 
 ```bash
-curl -X POST --header "Content-Type: application/json" -d "\"Hello\"" http://localhost:8080/actions/remember_me
+curl -X POST \
+  --header "Content-Type: application/json" \
+  -d "\"Hello\"" \
+  http://localhost:8080/actions/remember_me
 ```
 
 ```json
@@ -96,7 +102,9 @@ curl -X POST --header "Content-Type: application/json" -d "\"Hello\"" http://loc
 Now let's see the list of people -
 
 ```bash
-curl -X POST --header "Content-Type: application/json" http://localhost:8080/actions/list_people
+curl -X POST \
+  --header "Content-Type: application/json" \
+  http://localhost:8080/actions/list_people
 ```
 
 ```json
