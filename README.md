@@ -82,6 +82,18 @@ curl -X POST \
 "Hello, Cosmic! I'll remember you."
 ```
 
+Try adding the same name again.
+
+```bash
+curl -X POST \
+  --header "Content-Type: application/json" \
+  -d "\"Cosmic\"" \
+  http://localhost:8080/actions/remember_me
+```
+```json
+"Welcome back, Cosmic."
+```
+
 Add another name.
 
 ```bash
