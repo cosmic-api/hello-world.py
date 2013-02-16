@@ -38,6 +38,20 @@ Now you have a Cosmic API running as a web server, listening to port `8080`.
 
 ### Using Cosmic client
 
+Our client can load any Cosmic APIs via `/spec.json` endpoint.
+
+```python
+>>> from cosmic.api import API
+>>> client = API.load('http://localhost:8080/spec.json')
+>>> client.actions.remember_me("Cosmic")
+u"Hello, Cosmic! I'll remember you."
+>>> client.actions.remember_me("Cosmic")
+u'Welcome back, Cosmic.'
+>>> client.actions.remember_me("Hello")
+u"Hello, Hello! I'll remember you."
+>>> client.actions.list_people()
+[u'Cosmic', u'Hello']
+```
 
 
 ### Using raw HTTP request
