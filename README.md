@@ -1,9 +1,11 @@
 Example Cosmic API
 ==============
 
-hello-world.py is a sample application created to demonstrate basic features of [Cosmic](https://www.cosmic-api.com).
+hello-world.py is a sample application created to demonstrate basic features of [Cosmic.py](https://github.com/cosmic-api/cosmic.py).
 
-Checkout [GitHub page](http://cosmic-api.github.com/hello-world.py) to see how it works.
+Visit [GitHub page](http://cosmic-api.github.com/hello-world.py) to read annotated source of this project.
+
+Brought to you by [Cosmic](https://www.cosmic-api.com).
 
 ## Setup
 
