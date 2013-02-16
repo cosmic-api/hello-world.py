@@ -2,6 +2,8 @@ Example Cosmic API
 ==============
 
 hello-world.py is a sample application created to demonstrate basic features of [Cosmic.py](https://github.com/cosmic-api/cosmic.py).
+The API remembers upto 10 names submitted by the user, and it can list the names.
+
 
 Visit [GitHub page](http://cosmic-api.github.com/hello-world.py) to read annotated source of this project.
 
