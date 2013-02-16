@@ -69,6 +69,7 @@ people = set()
           <h3>Setup Actions</h3>
           
           <h4><code>remember_me</code> action</h4>
+          
           <pre><code>
 @api.action(
   accepts={"type": "string"},
@@ -77,7 +78,27 @@ people = set()
           </code></pre>
  
           <p>
-            
+            Here we are declaring that this function will take a single <code>string</code> parameter,
+            and it'll return a <code>string</code> as well.
+          </p>
+          
+          <pre><code>
+def remember_me(name):
+  """Remember someone upto 10 people.
+  """
+  if name not in people:
+    # Too many people to remember!
+    if len(people) >= 10:
+      people.pop()
+    # Add new person
+    people.add(name)
+    return "Hello, %s! I'll remember you." % name
+  else:
+    return "Welcome back, %s." % name
+          </code></pre>
+          
+          <p>
+            The actual function itself. Note that it takes in regular python <code>&lt;type 'str'&gt;</code>
           </p>
 
         </section>
