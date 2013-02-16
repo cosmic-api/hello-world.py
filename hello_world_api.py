@@ -12,11 +12,11 @@ people = set()
   returns={"type": "string"}
 )
 def remember_me(name):
-  """Remember someone upto 20 people.
+  """Remember someone upto 10 people.
   """
   if name not in people:
     # Too many people to remember!
-    if len(people) > 10:
+    if len(people) >= 10:
       people.pop()
     # Add new person
     people.add(name)
