@@ -1,7 +1,7 @@
 from cosmic.api import API
 
 # Define name of the API
-api = API('cosmic_hello_world')
+api = API('cosmic_hello_world', 'http://localhost:8080')
 
 # Set of people
 people = set()
@@ -39,4 +39,4 @@ def list_people():
 
 
 # Start listening to HTTP requests
-api.run(port=8080)
+api.run(port=8080, debug=True)
