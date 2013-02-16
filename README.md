@@ -67,8 +67,8 @@ curl http://localhost:8080/spec.json
 ```
 ```json
 {
-  "models": [], 
-  "name": "cosmic_hello_world", 
+  "url": "http://localhost:8080", 
+  "name": "cosmic_hello_world",
   "actions": [
     {
       "name": "remember_me",
@@ -82,7 +82,8 @@ curl http://localhost:8080/spec.json
         "items": {"type": "string"}
       }
     }
-  ]
+  ],
+  "models": []
 }
 ```
 
