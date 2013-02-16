@@ -134,9 +134,11 @@ curl -X POST \
 ["Cosmic", "Hello"]
 ```
 
-***
+
 
 Visit [Cosmic](https://www.cosmic-api.com) for more information.
+
+***
 
 ### License
 
