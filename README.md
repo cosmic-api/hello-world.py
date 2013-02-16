@@ -60,7 +60,7 @@ u"Hello, Hello! I'll remember you."
 
 (You can use [Postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en) for Chrome as well, it's an excellent app for playing with web APIs)
 
-Checkout the specification of the API.
+You can inspect how the API's spec looks like.
 
 ```bash
 curl http://localhost:8080/spec.json
