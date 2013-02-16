@@ -54,15 +54,21 @@ people = set()
           </code></pre>
 
           <p>
-            `API` "class" is used to create new instance of Cosmic API.
+            <code>API</code> class is used to create new instance of Cosmic API.
             First parameter is the name of the API, and it's required.
             Second parameter is the URL of the API.(this is optional) (edit me later)
           </p>
           
+          <pre><code>
+# Set of people
+people = set()
+          </code></pre>
+          
+          <p>Place to hold set of names.</p>
           
           <h3>Setup Actions</h3>
           
-          <h5>remember_me</h5>
+          <h4><code>remember_me</code> action</h4>
           <pre><code>
 @api.action(
   accepts={"type": "string"},
