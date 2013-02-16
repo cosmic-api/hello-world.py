@@ -98,7 +98,15 @@ def remember_me(name):
           </code></pre>
           
           <p>
-            The actual function itself. Note that it takes in regular python <code>&lt;type 'str'&gt;</code>
+            The actual function itself. Note that it takes in regular python <code>&lt;type 'str'&gt;</code>.
+            Cosmic takes care of type conversions automatically, using <code>accepts</code> schema defined above.
+          </p>
+          <p>
+            What is happening under the hood is that HTTP request with JSON body data is parsed, validated, and normalized to python's native <code>str</code> type.
+          </p>
+          <p>
+            The return value also goes through same process as well, except in reversed order.
+            The native <code>str</code> is serialized into JSON, based on <code>returns</code> schema.
           </p>
 
         </section>
