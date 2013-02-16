@@ -14,13 +14,13 @@ git clone git://github.com/cosmic-api/hello-world.py.git
 cd hello-world.py
 ```
 
-Install Cosmic with pip.
+Install Cosmic with [pip](http://www.pip-installer.org).
 
 ```bash
 pip install cosmic
 ```
 
-Optionally, if you use `vertualenv`
+Optionally, if you use [virtualenv](http://www.virtualenv.org)
 
 ```bash
 virtualenv venv
