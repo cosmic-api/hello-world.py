@@ -1,119 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>Hello-world.py by cosmic-api</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Hello-world.py by cosmic-api</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <div class="wrapper">
+      <header>
+        <h1>Hello-world.py</h1>
+        <p>Example API using Cosmic</p>
+        <p class="view"><a href="https://github.com/cosmic-api/hello-world.py">View the Project on GitHub <small>cosmic-api/hello-world.py</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cosmic-api/hello-world.py/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cosmic-api/hello-world.py/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cosmic-api/hello-world.py">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>What is Cosmic?</h3>
 
-        <header>
-          <h1>Hello-world.py</h1>
-          <h2>Example API using Cosmic</h2>
-        </header>
+<p><a href="https://www.cosmic-api.com">Cosmic</a> is a high-level framework for crafting web APIs.
+This page gives you an overview of how to write a simple Cosmic API.
+Instructions on how to run this example can be found on <a href="https://github.com/cosmic-api/hello-world.py">GitHub project</a>.</p>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/cosmic-api/hello-world.py/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/cosmic-api/hello-world.py/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/cosmic-api/hello-world.py" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+<h3>Analyzing the API</h3>
 
-        <hr>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">cosmic.api</span> <span class="kn">import</span> <span class="n">API</span>
 
-        <section id="main_content">
-          <h3>What is Cosmic?</h3>
+<span class="c"># Define name of the API</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="s">'cosmic_hello_world'</span><span class="p">,</span> <span class="s">'http://localhost:8080'</span><span class="p">)</span>
+</pre></div>
 
-          <p>
-            Cosmic is a high-level framework for crafting web APIs.
-            Please checkout our <a href="https://www.cosmic-api.com">homepage</a>.
-            This page gives you line by line explanation on how Cosmic APIs work.
-            Instructions on how to run this example can be found on <a href="https://github.com/cosmic-api/hello-world.py">GitHub project</a>.
-          </p>
+<p><code>API</code> class is used to create new instance of Cosmic API.
+First parameter is the name of the API, and it's required.
+Second parameter is the URL of the API.(this is optional) (edit me later)</p>
 
-          <h3>Import Cosmic and create new API</h3>
+<div class="highlight"><pre><span class="c"># Set of people</span>
+<span class="n">people</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
 
-          <pre><code>
-1: from cosmic.api import API
-2:
-3: # Define name of the API
-4: api = API('cosmic_hello_world', 'http://localhost:8080')
-          </code></pre>
+<p>Create an empty set to hold names.</p>
 
-          <p>
-            <code>API</code> class is used to create new instance of Cosmic API.
-            First parameter is the name of the API, and it's required.
-            Second parameter is the URL of the API.(this is optional) (edit me later)
-          </p>
-          
-          <pre><code>
-# Set of people
-people = set()
-          </code></pre>
-          
-          <p>Place to hold set of names.</p>
-          
-          <h3>Setup Actions</h3>
-          
-          <h4><code>remember_me</code> action</h4>
-          
-          <pre><code>
-@api.action(
-  accepts={"type": "string"},
-  returns={"type": "string"}
-)
-          </code></pre>
- 
-          <p>
-            Here we are declaring that this function will take a single <code>string</code> parameter,
-            and it'll return a <code>string</code> as well.
-          </p>
-          
-          <pre><code>
-def remember_me(name):
-  """Remember someone upto 10 people.
-  """
-  if name not in people:
-    # Too many people to remember!
-    if len(people) >= 10:
-      people.pop()
-    # Add new person
-    people.add(name)
-    return "Hello, %s! I'll remember you." % name
-  else:
-    return "Welcome back, %s." % name
-          </code></pre>
-          
-          <p>
-            The actual function itself. Note that it takes in regular python <code>&lt;type 'str'&gt;</code>.
-            Cosmic takes care of type conversions automatically, using <code>accepts</code> schema defined above.
-          </p>
-          <p>
-            What is happening under the hood is that HTTP request with JSON body data is parsed, validated, and normalized to python's native <code>str</code> type.
-          </p>
-          <p>
-            The return value also goes through same process as well, except in reversed order.
-            The native <code>str</code> is serialized into JSON, based on <code>returns</code> schema.
-          </p>
+<div class="highlight"><pre><span class="nd">@api.action</span><span class="p">(</span>
+  <span class="n">accepts</span><span class="o">=</span><span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">},</span>
+  <span class="n">returns</span><span class="o">=</span><span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">remember_me</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="sd">"""Remember someone upto 10 people.</span>
+<span class="sd">  """</span>
+  <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
+    <span class="c"># Too many people to remember!</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+      <span class="n">people</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="c"># Add new person</span>
+    <span class="n">people</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Hello, </span><span class="si">%s</span><span class="s">! I'll remember you."</span> <span class="o">%</span> <span class="n">name</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s">"Welcome back, </span><span class="si">%s</span><span class="s">."</span> <span class="o">%</span> <span class="n">name</span>
+</pre></div>
 
-        </section>
+<p>Here we are declaring that this function will take a single <code>string</code> parameter,
+and it'll return a <code>string</code> as well.</p>
 
-        <footer>
-          Hello-world.py is maintained by <a href="https://github.com/cosmic-api">cosmic-api</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+<p>Note that it takes in regular python <code>str</code>.
+Cosmic takes care of type conversions automatically, using <code>accepts</code> schema defined above.</p>
 
-        
-      </div>
+<p>What is happening under the hood is that HTTP request with JSON body data is parsed, validated, and normalized to python's native <code>str</code> type.</p>
+
+<p>The return value also goes through same process as well, except in reversed order.
+Returned native <code>str</code> is serialized into JSON, based on <code>returns</code> schema.</p>
+
+<div class="highlight"><pre><span class="c"># List people</span>
+<span class="nd">@api.action</span><span class="p">(</span>
+  <span class="n">returns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">"array"</span><span class="p">,</span>
+    <span class="s">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">list_people</span><span class="p">():</span>
+  <span class="sd">"""List everyone I know.</span>
+<span class="sd">  """</span>
+  <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+</pre></div>
+
+<p>Second action, which takes no argument, returns list of names in the set.</p>
+
+<p>Interesting part here is that the <code>returns</code> definition. In Cosmic, you can define complex models for the action's parameters or return values. All models are serialized/de-serialized automatically to/from JSON. </p>
+
+<p>Moreover, Cosmic does validations on all parameters and returns, so the function can always expect the parameters will be in correct type, as well as the returned values. If the function does not return correct type as defined in <code>returns</code> schema, it will raise exception. This is a wonderful feature since your API users can always expect to receive correct data type as defined in <code>returns</code> schema.</p>
+
+<div class="highlight"><pre><span class="c"># Start listening to HTTP requests</span>
+<span class="n">api</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+<p>Now you can start the HTTP server to serve requests.</p>
+
+<p>Because Cosmic is very modular, you'll be able to use other HTTP servers as oppose to currently default <code>flask</code> web server.</p>
+
+<hr><p>Visit <a href="https://www.cosmic-api.com">Cosmic</a> if you want to lean more.</p>
+      </section>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/cosmic-api">cosmic-api</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
