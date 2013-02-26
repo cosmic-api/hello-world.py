@@ -7,7 +7,7 @@ The API remembers upto 10 names submitted by the user, and it can list the names
 
 Visit [GitHub page](http://cosmic-api.github.com/hello-world.py) to read annotated source of this project.
 
-Brought to you by [Cosmic](https://www.cosmic-api.com).
+Brought to you by [Cosmic](http://www.cosmic-api.com).
 
 ## Setup
 
@@ -140,7 +140,7 @@ curl -X POST \
 
 
 
-Visit [Cosmic](https://www.cosmic-api.com) for more information.
+Visit [Cosmic](http://www.cosmic-api.com) for more information.
 
 ***
 
