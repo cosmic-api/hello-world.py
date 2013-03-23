@@ -1,18 +1,20 @@
+from cosmic.tools import normalize_schema
 from cosmic.api import API
 
+
 # Define name of the API
-api = API('cosmic_hello_world', 'http://localhost:8080')
+api = API.create('cosmic_hello_world')
 
 # Set of people
 people = set()
 
 
 @api.action(
-  accepts={"type": "string"},
-  returns={"type": "string"}
+    accepts=normalize_schema({"type": "string"}),
+    returns=normalize_schema({"type": "string"})
 )
 def remember_me(name):
-  """Remember someone upto 10 people.
+  """Remember names upto 10 people.
   """
   if name not in people:
     # Too many people to remember!
@@ -25,12 +27,11 @@ def remember_me(name):
     return "Welcome back, %s." % name
 
 
-# List people
 @api.action(
-  returns={
-    "type": "array",
-    "items": {"type": "string"}
-  }
+    returns=normalize_schema({
+        "type": "array",
+        "items": {"type": "string"}
+    })
 )
 def list_people():
   """List everyone I know.
