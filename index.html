@@ -33,30 +33,41 @@
 This page gives you an overview of how to write a simple Cosmic API.
 Instructions on how to run this example can be found on <a href="https://github.com/cosmic-api/hello-world.py">GitHub project</a>.</p>
 
-<h3>Analyzing the API</h3>
+<h3>The Server</h3>
 
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">cosmic.api</span> <span class="kn">import</span> <span class="n">API</span>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">cosmic.tools</span> <span class="kn">import</span> <span class="n">normalize_schema</span>
+<span class="kn">from</span> <span class="nn">cosmic.api</span> <span class="kn">import</span> <span class="n">API</span>
 
 <span class="c"># Define name of the API</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="s">'cosmic_hello_world'</span><span class="p">,</span> <span class="s">'http://localhost:8080'</span><span class="p">)</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">API</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">'cosmic_hello_world'</span><span class="p">)</span>
 </pre></div>
 
-<p><code>API</code> class is used to create new instance of Cosmic API.
-First parameter is the name of the API, and it's required.
-Second parameter is the URL of the API.(this is optional) (edit me later)</p>
+<p><code>normalize_schema</code> that we are importing here is a helper function that turns JSON-like data structure into a schema model. We'll get to see how it's used pretty soon.</p>
+
+<p><code>API</code> class is used to create new instance of Cosmic API.</p>
 
 <div class="highlight"><pre><span class="c"># Set of people</span>
 <span class="n">people</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 </pre></div>
 
-<p>Create an empty set to hold names.</p>
+<p>This is where we store bunch of names.</p>
 
 <div class="highlight"><pre><span class="nd">@api.action</span><span class="p">(</span>
-  <span class="n">accepts</span><span class="o">=</span><span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">},</span>
-  <span class="n">returns</span><span class="o">=</span><span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}</span>
+    <span class="n">accepts</span><span class="o">=</span><span class="n">normalize_schema</span><span class="p">({</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}),</span>
+    <span class="n">returns</span><span class="o">=</span><span class="n">normalize_schema</span><span class="p">({</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">})</span>
 <span class="p">)</span>
-<span class="k">def</span> <span class="nf">remember_me</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-  <span class="sd">"""Remember someone upto 10 people.</span>
+</pre></div>
+
+<p>Here we are annotating <code>remember_me</code> function as an API endpoint.
+This function then automatically gets assigned an URL <code>/actions/remember_me</code>.</p>
+
+<p>Since <code>remember_me</code> will take in <code>string</code> name of a person, we set <code>accepts</code> keyword argument to a schema which represents a single <code>string</code> type. Note that <code>normalize_schema</code> helper function constructs proper schema object from JSON-like data structure.</p>
+
+<p><code>returns</code> keyword argument defines return value of the <code>remember_me</code> function.
+Which is also simply a <code>string</code>.</p>
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">remember_me</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="sd">"""Remember names upto 10 people.</span>
 <span class="sd">  """</span>
   <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
     <span class="c"># Too many people to remember!</span>
@@ -69,23 +80,18 @@ Second parameter is the URL of the API.(this is optional) (edit me later)</p>
     <span class="k">return</span> <span class="s">"Welcome back, </span><span class="si">%s</span><span class="s">."</span> <span class="o">%</span> <span class="n">name</span>
 </pre></div>
 
-<p>Here we are declaring that this function will take a single <code>string</code> parameter,
-and it'll return a <code>string</code> as well.</p>
+<p>Actual function that remembers up to 10 names.</p>
 
-<p>Note that it takes in regular python <code>str</code>.
-Cosmic takes care of type conversions automatically, using <code>accepts</code> schema defined above.</p>
+<p>Note that the parameter <code>name</code> is a regular python <code>str</code> type.
+What is happening under the hood is that the JSON body of HTTP request is parsed, validated, and normalized to python's native <code>str</code> type.</p>
 
-<p>What is happening under the hood is that HTTP request with JSON body data is parsed, validated, and normalized to python's native <code>str</code> type.</p>
+<p>The return value goes through a similar process as well, returned native <code>str</code> type is validated and serialized into JSON, forming <code>application/json</code> response.</p>
 
-<p>The return value also goes through same process as well, except in reversed order.
-Returned native <code>str</code> is serialized into JSON, based on <code>returns</code> schema.</p>
-
-<div class="highlight"><pre><span class="c"># List people</span>
-<span class="nd">@api.action</span><span class="p">(</span>
-  <span class="n">returns</span><span class="o">=</span><span class="p">{</span>
-    <span class="s">"type"</span><span class="p">:</span> <span class="s">"array"</span><span class="p">,</span>
-    <span class="s">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}</span>
-  <span class="p">}</span>
+<div class="highlight"><pre><span class="nd">@api.action</span><span class="p">(</span>
+    <span class="n">returns</span><span class="o">=</span><span class="n">normalize_schema</span><span class="p">({</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"array"</span><span class="p">,</span>
+        <span class="s">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"string"</span><span class="p">}</span>
+    <span class="p">})</span>
 <span class="p">)</span>
 <span class="k">def</span> <span class="nf">list_people</span><span class="p">():</span>
   <span class="sd">"""List everyone I know.</span>
@@ -95,17 +101,31 @@ Returned native <code>str</code> is serialized into JSON, based on <code>returns
 
 <p>Second action, which takes no argument, returns list of names in the set.</p>
 
-<p>Interesting part here is that the <code>returns</code> definition. In Cosmic, you can define complex models for the action's parameters or return values. All models are serialized/de-serialized automatically to/from JSON. </p>
-
-<p>Moreover, Cosmic does validations on all parameters and returns, so the function can always expect the parameters will be in correct type, as well as the returned values. If the function does not return correct type as defined in <code>returns</code> schema, it will raise exception. This is a wonderful feature since your API users can always expect to receive correct data type as defined in <code>returns</code> schema.</p>
+<p>Here we see a bit more complex return type. <code>list_people</code> function returns a python <code>list</code>, which will then be validated, and serialized to a JSON <code>array</code> containing <code>string</code>s.  </p>
 
 <div class="highlight"><pre><span class="c"># Start listening to HTTP requests</span>
 <span class="n">api</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
-<p>Now you can start the HTTP server to serve requests.</p>
+<p>When the server is started, Cosmic generates an endpoint at <code>/spec.json</code> which describes all endpoints on this server precisely.
+We think that well defined, simple, and portable specs like these help both API developers and consumers to work together nicely.</p>
 
-<p>Because Cosmic is very modular, you'll be able to use other HTTP servers as oppose to currently default <code>flask</code> web server.</p>
+<h3>Using the API with Cosmic Client</h3>
+
+<p>APIs built with Cosmic are well defined by the spec. This allows us to build native client libraries on the fly by loading <code>/spec.json</code> from the server.</p>
+
+<p>For example, with <code>hello-world.py</code>, we can do</p>
+
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">cosmic.api</span> <span class="kn">import</span> <span class="n">API</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">API</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">'http://localhost:8080/spec.json'</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">remember_me</span><span class="p">(</span><span class="s">"Cosmic"</span><span class="p">)</span> <span class="c"># prints u"Hello, Cosmic! I'll remember you."</span>
+<span class="n">client</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">remember_me</span><span class="p">(</span><span class="s">"Cosmic"</span><span class="p">)</span> <span class="c"># prints u'Welcome back, Cosmic.'</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">remember_me</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">)</span> <span class="c"># prints u"Hello, Hello! I'll remember you."</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">list_people</span><span class="p">()</span> <span class="c"># returns [u'Cosmic', u'Hello']</span>
+</pre></div>
 
 <hr><p>Visit <a href="http://www.cosmic-api.com">Cosmic</a> if you want to lean more.</p>
       </section>
