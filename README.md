@@ -7,7 +7,6 @@ The API remembers upto 10 names submitted by the user, and it can list the names
 
 Visit [GitHub page](http://cosmic-api.github.com/hello-world.py) to read annotated source of this project.
 
-Brought to you by [Cosmic](http://www.cosmic-api.com).
 
 ## Setup
 
@@ -18,10 +17,10 @@ git clone git://github.com/cosmic-api/hello-world.py.git
 cd hello-world.py
 ```
 
-Install Cosmic with [pip](http://www.pip-installer.org).
+Install Cosmic with [pip](http://www.pip-installer.org)
 
 ```bash
-pip install cosmic
+pip install -r requirements.txt
 ```
 
 Optionally, if you use [virtualenv](http://www.virtualenv.org)
@@ -38,13 +37,13 @@ pip install -r requirements.txt
 python hello_world_api.py
 ```
 
-Now you have a Cosmic API running as a web server, listening to port `8080`.
+Now you have a Cosmic web API running at port `8080`, listening to http requests.
 
 ## Play with the API
 
 ### Using Cosmic client
 
-Our client can load any Cosmic APIs via `/spec.json` endpoint.
+Our client can load any Cosmic APIs via `/spec.json` endpoint, which is generated automatically.
 
 ```python
 >>> from cosmic.api import API
@@ -71,7 +70,6 @@ curl http://localhost:8080/spec.json
 ```
 ```json
 {
-  "url": "http://localhost:8080", 
   "name": "cosmic_hello_world",
   "actions": [
     {
@@ -137,7 +135,6 @@ curl -X POST \
 ```json
 ["Cosmic", "Hello"]
 ```
-
 
 
 Visit [Cosmic](http://www.cosmic-api.com) for more information.
